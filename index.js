@@ -14,6 +14,8 @@ const express = require("express");
 const readline = require("readline");
 const config = require("./config");
 const { smsg } = require("./lib/message");
+const menuCmd = require('./menu.js');
+const mediaCmd = require('./media.js');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
