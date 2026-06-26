@@ -17,10 +17,8 @@ const menuCmd = require('./menu.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const botLogoUrl = "https://i.ibb.co/Z6gnPvV2/file-000009be47207afef1535933c3f19.png";
+const botLogoUrl = "https://i.ibb.co/271whBpp/c9d0b775835a.jpg";
 
-const shrinkmeApi = "81bd69560df8d7ed1f3042d7bed34037908d4998";
-const targetUrl = "https://youtube.com/@VimukthiThuhina";
 
 // ===== COBALT API HELPER - 100% FREE =====
 async function cobaltDownload(url, format = 'video') {
@@ -39,7 +37,7 @@ async function cobaltDownload(url, format = 'video') {
         if (res.data.status === 'success' || res.data.status === 'redirect') {
             return res.data.url;
         }
-        return null;
+        return null; // <-- < මකලා දැම්මා
     } catch (e) {
         console.log('Cobalt error:', e.message);
         return null;
@@ -54,15 +52,9 @@ async function getEarnFooter() {
             shortUrl = shortRes.data.shortenedUrl;
         }
     } catch (shortErr) {
-        console.log("Shrinkme API error, bypassing...");
+        // Error උනත් වැඩ කරන්නේ මේකයි
     }
-    return `\n\n💵 *ඔබත් කැමතිද මුදල් උපයන්න මෙම link එකෙන් යන්න:*
-👉 ${shortUrl}
-
-*📌 ලින්ක් එකෙන් ඉදිරියට යන සරල පියවර 3:*
-1️⃣ ලින්ක් එකට ගොස් ඉහළින් එන *'CLOSE'* හෝ *'X'* ඔබන්න.
-2️⃣ පහළට ගොස් නිල් පාට *'Click here to continue'* ඔබන්න.
-3️⃣ තත්පර 5ක් රැඳී සිට *'Get Link'* ඔබන්න.`;
+    return `\n\n🔗 ${shortUrl}`; // Footer Text Return කරා
 }
 
 let sock = null;
@@ -92,11 +84,11 @@ async function startThuhiMD() {
             if (shouldReconnect) startThuhiMD();
         } else if (connection === 'open') {
             console.log('=================================================');
-            console.log('🎉 THUHI MD IS RUNNING AND READY NOW!');
+            console.log('🎉 HASI MD IS RUNNING AND READY NOW!');
             console.log('=================================================');
             try {
                 const myNumber = sock.user.id.split(':')[0] + '@s.whatsapp.net';
-                const welcomeMsg = `✨ *THUHI MD සම්බන්ධ වෙමින් පවතී...*\n\nදැන් ඔබගේ inbox එකෙහි \`.alive\` ලෙස Type කර බෝට් ක්‍රියාකාරීදැයි පරීක්ෂා කරන්න!\n\n_Powered by Vimukthi Thuhina_`;
+                const welcomeMsg = `✨ *HASI MD සම්බන්ධ වෙමින් පවතී...*\n\nදැන් ඔබගේ inbox එකෙහි \`.alive\` ලෙස Type කර බෝට් ක්‍රියාකාරීදැයි පරීක්ෂා කරන්න!\n\n_Powered by Vimukthi Thuhina_`;
                 await sock.sendMessage(myNumber, { image: { url: botLogoUrl }, caption: welcomeMsg });
             } catch (e) {
                 console.log("Error sending welcome message: ", e);
@@ -149,7 +141,7 @@ async function startThuhiMD() {
 
                 // ALIVE
                 if (command === 'alive') {
-                    const aliveMsg = `👋 *THUHI MD IS ALIVE NOW*\n\n*OWNER* - THUHI MD\n*VERSION* - 1.0.0\n*PREFIX* - [. ]\n\n💬 සියලුම විධානයන් බැලීමට \`.menu\` ලෙස ටයිප් කරන්න!${earnFooterText}`;
+                    const aliveMsg = `👋 *HASI MD IS ALIVE NOW*\n\n*OWNER* - HASI MD\n*VERSION* - 1.0.0\n*PREFIX* - [. ]\n\n💬 සියලුම විධානයන් බැලීමට \`.menu\` ලෙස ටයිප් කරන්න!${earnFooterText}`;
                     await sock.sendMessage(from, { image: { url: botLogoUrl }, caption: aliveMsg }, { quoted: mek });
                     return;
                 }
@@ -165,16 +157,16 @@ async function startThuhiMD() {
                     const start = Date.now();
                     const msg = await sock.sendMessage(from, { text: '🏓 Pinging...' }, { quoted: mek });
                     const speed = Date.now() - start;
-                    await sock.sendMessage(from, { text: `🏓 *PONG!*\n\n⚡ Speed: ${speed}ms\n📡 Status: Online\n🤖 Bot: THUHI MD${earnFooterText}`, edit: msg.key });
+                    await sock.sendMessage(from, { text: `🏓 *PONG!*\n\n⚡ Speed: ${speed}ms\n📡 Status: Online\n🤖 Bot: HASI MD${earnFooterText}`, edit: msg.key });
                     return;
                 }
 
                 if (command === 'owner') {
-                    const ownerNumber = '947XXXXXXXX'; // << මේක උඹේ number එකට මාරු කරපන්
+                    const ownerNumber = '9477XXXXXXXX'; // << මේක උඹේ number එකට මාරු කරපන්
                     await sock.sendMessage(from, {
                         contacts: {
-                            displayName: 'THUHI MD Owner',
-                            contacts: [{ vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:THUHI MD Owner\nTEL;type=CELL;type=VOICE;waid=${ownerNumber}:+${ownerNumber}\nEND:VCARD` }]
+                            displayName: 'HASI MD Owner',
+                            contacts: [{ vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:HASI MD Owner\nTEL;type=CELL;type=VOICE;waid=${ownerNumber}:+${ownerNumber}\nEND:VCARD` }]
                         },
                         caption: `👑 *Bot Owner Contact*${earnFooterText}`
                     }, { quoted: mek });
@@ -241,7 +233,7 @@ async function startThuhiMD() {
                     if (!from.endsWith('@g.us')) return await sock.sendMessage(from, { text: '❌ Group එකේ විතරක් වැඩ' }, { quoted: mek });
                     const metadata = await sock.groupMetadata(from);
                     let members = metadata.participants.map(p => `@${p.id.split('@')[0]}`).join('\n');
-                    await sock.sendMessage(from, { text: `📢 *THUHI MD Tag All*\n\n${members}${earnFooterText}`, mentions: metadata.participants.map(p => p.id) }, { quoted: mek });
+                    await sock.sendMessage(from, { text: `📢 *HASI MD Tag All*\n\n${members}${earnFooterText}`, mentions: metadata.participants.map(p => p.id) }, { quoted: mek });
                     return;
                 }
 
@@ -256,7 +248,7 @@ async function startThuhiMD() {
                             targetMekForSticker = { message: mek.message.extendedTextMessage.contextInfo.quotedMessage };
                         }
                         const buffer = await downloadMediaMessage(targetMekForSticker, 'buffer', {}, { logger: pino() });
-                        const sticker = new Sticker(buffer, { pack: 'THUHI MD Pack', author: 'Vimukthi Thuhina', type: StickerTypes.FULL, quality: 70 });
+                        const sticker = new Sticker(buffer, { pack: 'HASI MD Pack', author: 'Vimukthi Thuhina', type: StickerTypes.FULL, quality: 70 });
                         const stickerBuffer = await sticker.toBuffer();
                         await sock.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
                         await sock.sendMessage(from, { text: `🎉 *ඔබේ ස්ටිකරය සාර්ථකව සකසා ඇත!*${earnFooterText}` }, { quoted: mek });
@@ -266,50 +258,49 @@ async function startThuhiMD() {
                     return;
                 }
 
-// ===== OVP FIXED FOR VIEW ONCE V2 & V2EXTENSION =====
-if (command === 'ovp') {
-    const quoted = mek.message.extendedTextMessage?.contextInfo?.quotedMessage;
-    if (!quoted) return await sock.sendMessage(from, { text: `❌ View Once එකට reply කර.ovp ගහන්න${earnFooterText}` }, { quoted: mek });
+                // ===== OVP FIXED FOR VIEW ONCE V2 & V2EXTENSION =====
+                if (command === 'ovp') {
+                    const quoted = mek.message.extendedTextMessage?.contextInfo?.quotedMessage;
+                    if (!quoted) return await sock.sendMessage(from, { text: `❌ View Once එකට reply කර.ovp ගහන්න${earnFooterText}` }, { quoted: mek });
 
-    // View Once V2, V2Extension, Old V1 ඔක්කොම handle
-    let viewOnceMsg = null;
-    if (quoted.viewOnceMessageV2Extension) {
-        viewOnceMsg = quoted.viewOnceMessageV2Extension.message;
-    } else if (quoted.viewOnceMessageV2) {
-        viewOnceMsg = quoted.viewOnceMessageV2.message;
-    } else if (quoted.viewOnceMessage) {
-        viewOnceMsg = quoted.viewOnceMessage.message;
-    }
+                    let viewOnceMsg = null;
+                    if (quoted.viewOnceMessageV2Extension) {
+                        viewOnceMsg = quoted.viewOnceMessageV2Extension.message;
+                    } else if (quoted.viewOnceMessageV2) {
+                        viewOnceMsg = quoted.viewOnceMessageV2.message;
+                    } else if (quoted.viewOnceMessage) {
+                        viewOnceMsg = quoted.viewOnceMessage.message;
+                    }
 
-    if (!viewOnceMsg) return await sock.sendMessage(from, { text: `❌ View Once නෙමෙයි. Open කරලා බලලා තියෙනවා නම් වැඩ කරන්නේ නෑ${earnFooterText}` }, { quoted: mek });
+                    if (!viewOnceMsg) return await sock.sendMessage(from, { text: `❌ View Once නෙමෙයි. Open කරලා බලලා තියෙනවා නම් වැඩ කරන්නේ නෑ${earnFooterText}` }, { quoted: mek });
 
-    await sock.sendMessage(from, { text: "⏳ View Once save කරනවා..." }, { quoted: mek });
+                    await sock.sendMessage(from, { text: "⏳ View Once save කරනවා..." }, { quoted: mek });
 
-    try {
-        const buffer = await downloadMediaMessage({ message: viewOnceMsg }, 'buffer', {}, { logger: pino() });
-        const msgType = Object.keys(viewOnceMsg)[0];
+                    try {
+                        const buffer = await downloadMediaMessage({ message: viewOnceMsg }, 'buffer', {}, { logger: pino() });
+                        const msgType = Object.keys(viewOnceMsg)[0];
 
-        if (msgType === 'imageMessage') {
-            await sock.sendMessage(from, {
-                image: buffer,
-                caption: '🔓 View Once Photo Saved!\n⚡ THUHI MD' + earnFooterText
-            }, { quoted: mek });
-        }
-        else if (msgType === 'videoMessage') {
-            await sock.sendMessage(from, {
-                video: buffer,
-                caption: '🔓 View Once Video Saved!\n⚡ THUHI MD' + earnFooterText
-            }, { quoted: mek });
-        }
-        else {
-            await sock.sendMessage(from, { text: `❌ මේ type එක support කරන්නේ නෑ` }, { quoted: mek });
-        }
-    } catch (e) {
-        console.log('OVP Error:', e);
-        await sock.sendMessage(from, { text: `❌ Save කරන්න බැරි වුණා. View Once එක open කරලා බලලා තියෙනවා නම් වැඩ කරන්නේ නෑ${earnFooterText}` }, { quoted: mek });
-    }
-    return;
-}
+                        if (msgType === 'imageMessage') {
+                            await sock.sendMessage(from, {
+                                image: buffer,
+                                caption: '🔓 View Once Photo Saved!\n⚡ HASI MD' + earnFooterText
+                            }, { quoted: mek });
+                        }
+                        else if (msgType === 'videoMessage') {
+                            await sock.sendMessage(from, {
+                                video: buffer,
+                                caption: '🔓 View Once Video Saved!\n⚡ HASI MD' + earnFooterText
+                            }, { quoted: mek });
+                        }
+                        else {
+                            await sock.sendMessage(from, { text: `❌ මේ type එක support කරන්නේ නෑ` }, { quoted: mek });
+                        }
+                    } catch (e) {
+                        console.log('OVP Error:', e);
+                        await sock.sendMessage(from, { text: `❌ Save කරන්න බැරි වුණා. View Once එක open කරලා බලලා තියෙනවා නම් වැඩ කරන්නේ නෑ${earnFooterText}` }, { quoted: mek });
+                    }
+                    return;
+                }
 
                 if (command === 'toimg') {
                     const isSticker = msgType === 'stickerMessage' || (msgType === 'extendedTextMessage' && mek.message.extendedTextMessage.contextInfo?.quotedMessage?.stickerMessage);
@@ -474,7 +465,7 @@ if (command === 'ovp') {
                     const uptime = process.uptime();
                     const hours = Math.floor(uptime / 3600);
                     const minutes = Math.floor((uptime % 3600) / 60);
-                    await sock.sendMessage(from, { text: `ℹ️ *THUHI MD Bot Info*\n\n👑 Owner: Vimukthi Thuhina\n📦 Version: 1.0.0\n⏱️ Uptime: ${hours}h ${minutes}m\n📡 Status: Online${earnFooterText}` }, { quoted: mek });
+                    await sock.sendMessage(from, { text: `ℹ️ *HASI MD Bot Info*\n\n👑 Owner: Vimukthi Thuhina\n📦 Version: 1.0.0\n⏱️ Uptime: ${hours}h ${minutes}m\n📡 Status: Online${earnFooterText}` }, { quoted: mek });
                     return;
                 }
 
@@ -597,7 +588,7 @@ if (command === 'ovp') {
                     else if (innerType === 'videoMessage') deletedText = innerMsg.videoMessage.caption || '📹 (caption නැත)';
                     else deletedText = '📦 Media';
                     const earnFooterText = await getEarnFooter();
-                    const antiDeleteAlert = `*°❤️🛑 ANTI DELETE DETECTED 🛑❤️°*\n\n• *Deleted By:* @${senderNum}\n💬 *Message:* ${deletedText}\n\n| © *THUHI MD MINI BOT*${earnFooterText}`;
+                    const antiDeleteAlert = `*°❤️🛑 ANTI DELETE DETECTED 🛑❤️°*\n\n• *Deleted By:* @${senderNum}\n💬 *Message:* ${deletedText}\n\n| © *HASI MD MINI BOT*${earnFooterText}`;
                     await sock.sendMessage(from, { text: antiDeleteAlert, mentions: [participant] });
                     const hasMedia = ['imageMessage', 'videoMessage'].includes(innerType);
                     if (hasMedia) {
